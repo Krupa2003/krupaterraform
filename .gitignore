@@ -1,0 +1,8 @@
+awscliv2.zip
+# Ignore Terraform state and provider directories
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Ignore ZIP and other large files
+*.zip
