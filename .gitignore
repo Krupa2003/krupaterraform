@@ -6,3 +6,5 @@ awscliv2.zip
 
 # Ignore ZIP and other large files
 *.zip
+awscliv2.zip
+.terraform/
