@@ -10,22 +10,18 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                
-                // Replace 'https://github.com/your-username/your-repository.git' with your repo URL
-                git 'https://github.com/Krupa2003/krupaterraform.git'
-                
-                // Print files to verify Terraform configurations are present
-                sh 'ls -la'
+                // Clone the Git repository using the correct syntax
+                git(
+                    url: 'https://github.com/Krupa2003/krupaterraform.git', 
+                    branch: 'main',  // Specify the branch name
+                    credentialsId: 'aws-terraform-credentials'  // Reference to your Jenkins credentials
+                )
             }
         }
 
         stage('Terraform Init') {
             steps {
                 script {
-                    // Run terraform init in the directory containing Terraform files if necessary
-                    // Example with subdirectory terraform:
-                    // sh 'cd terraform && terraform init'
-                    // Use the line below if your Terraform files are in the root of the repo:
                     sh 'terraform init'
                 }
             }
@@ -34,9 +30,6 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 script {
-                    // Example with subdirectory terraform:
-                    // sh 'cd terraform && terraform plan'
-                    // Use the line below if your Terraform files are in the root of the repo:
                     sh 'terraform plan'
                 }
             }
@@ -45,9 +38,6 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 script {
-                    // Example with subdirectory terraform:
-                    // sh 'cd terraform && terraform apply -auto-approve'
-                    // Use the line below if your Terraform files are in the root of the repo:
                     sh 'terraform apply -auto-approve'
                 }
             }
@@ -56,7 +46,6 @@ pipeline {
 
     post {
         always {
-            // Clean up workspace after execution
             cleanWs()
         }
     }
